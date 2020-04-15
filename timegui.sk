@@ -1,0 +1,49 @@
+#-----------------------
+
+#    TimeGUI by ItsMCB
+
+#-----------------------
+
+#-----------------------
+#     CONFIG
+#-----------------------
+options:
+    # DO NOT CHANGE!
+	version: 1.0
+	# DO NOT CHANGE!
+	prefix: §8[§eTime GUI§8]&r§7
+	noperm: {@prefix}&8»&r &c&lYou're not allowed to use this command!
+	update-link: <link:https://github.com/VexelMedia/TimeGUI/releases>https://github.com/VexelMedia/TimeGUI/releases
+
+on join:
+	player has permission "update.notfiy":
+		wait 1 second
+		message "{@prefix} &5&lChecking for updates..."
+		wait 30 tick
+		if text from "https://raw.githubusercontent.com/VexelMedia/TimeGUI/master/version.md" is not "{@version}":
+			message "{@prefix} &c&lYour version of {@prefix} &c&lis out of date! Please update it here: &3&l{@update-link}"
+		else:
+			message "{@prefix} &a&lThere are no new updates."
+command /timegui:
+	aliases: /tg
+	permission: admin.timegui
+	trigger:
+		open chest with 1 row named "{@prefix}" to player
+		wait 1 tick
+		set {_sunrise} to white wool named "&eSunrise"
+		set {_day} to white wool named "&eDay"
+		set {_noon} to white wool named "&eNoon"
+		set {_sunset} to white wool named "&eSunset"
+		set {_night} to white wool named "&eNight"
+		set {_midnight} to white wool named "&eMidnight"
+		set {_glass} to white stained glass pane named "&f"
+		set line 1 of lore of {_wool} to "&fClick to change the time!"
+		format gui slot 0 of player with {_sunrise} to close then run player command "/time set sunrise"
+		format gui slot 1 of player with {_day} to close then run player command "/time set day"
+		format gui slot 2 of player with {_noon} to close then run player command "/time set noon"
+		format gui slot 3 of player with {_sunset} to close then run player command "/time set sunset"
+		format gui slot 4 of player with {_night} to close then run player command "/time set night"
+		format gui slot 5 of player with {_midnight} to close then run player command "/time set midnight"
+		format gui slot 6 and 7 of player with {_glass}
+		format slot 8 of player with barrier named "&7&lCancle" to close
+		stop
